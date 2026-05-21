@@ -296,7 +296,8 @@ def shipping(shipping_query):
 def checkout(pre_checkout_query):
     bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
 
-@bot.message_handler(content_types=[  successful_payment  ])
+@bot.message_handler(content_types=['successful_payment'])
+
 def got_payment(message):
     uid = message.chat.id
     payload = message.successful_payment.invoice_payload
@@ -498,6 +499,7 @@ def setup_webhook_route():
 
 if __name__ == "__main__":
     # تشغيل السيرفر عن طريق waitress لحل مشكلة السيرفرات المفتوحة والمنافذ
-    port = int(os.environ.get( PORT , 10000))
+    port = int(os.environ.get('PORT', 10000))
     print(f"جاري تشغيل المنصة السحابية على المنفذ: {port}")
-    serve(app, host= 0.0.0.0 , port=port)ـ
+    serve(app, host='0.0.0.0', port=port)
+ـ
