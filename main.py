@@ -11,11 +11,24 @@ from telebot import types
 from waitress import serve # استيراد السيرفر الإنتاجي لحل مشكلة المنافذ على Render
 
 # ================= FLASK SERVER FOR 24/7 ACTIVE =================
+# 1. تعريف سيرفر الفلاسم
 app = Flask(__name__)
 
+# 2. الصفحة الرئيسية (التي تمنع Render من إغلاق البوت)
 @app.route("/")
 def home():
     return "🟢 Virtual Server Pro Is Running Successfully 24/7!"
+
+# 3. إِصْلاح النقص: إضافة المسار السري لاستقبال رسائل التليجرام وتمريرها للبوت
+@app.route(f"/{TOKEN}", methods=["POST"])
+def telegram_webhook():
+    if request.headers.get('content-type') == 'application/json':
+        json_string = request.get_data().decode('utf-8')
+        update = types.Update.de_json(json_string)
+        bot.process_new_updates([update]) # هنا يتم إجبار البوت على قراءة الرسالة والرد
+        return "OK", 200
+    else:
+        return "Invalid Request", 403
 
 # --- الإعدادات الفخمة ---
 TOKEN = "8613457292:AAHY9U2D3kqOsSoSrub_7SAFI87BoQIUjiw"
