@@ -15,7 +15,7 @@ from waitress import serve # استيراد السيرفر الإنتاجي لح
 app = Flask(__name__)
 
 # 👈 انقل التوكن هنا في الأعلى ليقرأه الكود أولاً
-TOKEN = "8613457292:AAHY9U2D3kqOsSoSrub_7SAFI87BoQIUjiw"
+TOKEN = "8790387996:AAFB6u4jHWrtsGPnECIxLWxiyJm8rgrV5Vs"
 
 # 2. الصفحة الرئيسية
 @app.route("/")
