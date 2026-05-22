@@ -14,24 +14,25 @@ from waitress import serve # استيراد السيرفر الإنتاجي لح
 # 1. تعريف سيرفر الفلاسم
 app = Flask(__name__)
 
-# 2. الصفحة الرئيسية (التي تمنع Render من إغلاق البوت)
+# 👈 انقل التوكن هنا في الأعلى ليقرأه الكود أولاً
+TOKEN = "8613457292:AAHY9U2D3kqOsSoSrub_7SAFI87BoQIUjiw"
+
+# 2. الصفحة الرئيسية
 @app.route("/")
 def home():
     return "🟢 Virtual Server Pro Is Running Successfully 24/7!"
 
-# 3. إِصْلاح النقص: إضافة المسار السري لاستقبال رسائل التليجرام وتمريرها للبوت
+# 3. المسار السري لاستقبل الرسائل (الآن سيتعرف على TOKEN بدون أخطاء)
 @app.route(f"/{TOKEN}", methods=["POST"])
 def telegram_webhook():
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data().decode('utf-8')
         update = types.Update.de_json(json_string)
-        bot.process_new_updates([update]) # هنا يتم إجبار البوت على قراءة الرسالة والرد
+        bot.process_new_updates([update])
         return "OK", 200
     else:
         return "Invalid Request", 403
 
-# --- الإعدادات الفخمة ---
-TOKEN = "8613457292:AAHY9U2D3kqOsSoSrub_7SAFI87BoQIUjiw"
 ADMIN_ID = 7484089854
 OWNER_USER = "@HAFZAbdh"  # معرف المالك المعتمد
 MY_JAIB_ACCOUNT = "784714890" # رقم حساب محفظة جيب أو إم فلوس
